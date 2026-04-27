@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Josep Costa — Fotografía Analógica</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --text: #e8e4df;
+    --text-muted: #7a7672;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.15);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Outfit', system-ui, sans-serif;
+    --mono: 'Space Mono', 'Courier New', monospace;
+    --transition: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent) var(--bg); }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    max-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+    padding: 0;
+    margin: 0;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    filter: grayscale(30%);
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.4) 100%);
+    z-index: 1;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(transparent, var(--bg)); z-index: 1;
+  }
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    animation: heroFadeIn 2s var(--transition) forwards;
+    opacity: 0; transform: translateY(30px);
+  }
+  @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+  .hero-logo {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(3rem, 8vw, 7rem);
+    letter-spacing: 0.04em; line-height: 1; margin-bottom: 1rem; color: var(--text);
+  }
+  .hero-logo span {
+    display: block; font-style: italic; font-size: 0.45em;
+    letter-spacing: 0.2em; color: var(--accent); margin-top: 0.5rem; font-weight: 300;
+  }
+  .hero-tagline {
+    font-family: var(--sans); font-size: 0.85rem;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 1.5rem; font-weight: 200;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    animation: pulse 2.5s ease-in-out infinite; cursor: pointer; text-decoration: none;
+  }
+  .hero-scroll span { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
+  .hero-scroll svg { width: 20px; height: 20px; stroke: var(--accent); }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.6s ease, padding 0.4s ease;
+  }
+  .nav.scrolled {
+    background: rgba(10,10,10,0.92); backdrop-filter: blur(20px);
+    padding: 1rem 3rem; border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .nav-brand { font-family: var(--sans); font-size: 1.1rem; font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--sans); font-size: 0.75rem; font-weight: 300;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+    text-decoration: none; transition: color 0.3s ease; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--accent); transition: width 0.4s var(--transition);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 8rem 3rem; max-width: 1400px; margin: 0 auto; }
+  .section-header {
+    margin-bottom: 4rem; opacity: 0; transform: translateY(40px);
+    transition: all 0.8s var(--transition);
+  }
+  .section-header.visible { opacity: 1; transform: translateY(0); }
+  .section-label {
+    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before { content: ''; width: 40px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300; line-height: 1.2; color: var(--text);
+  }
+
+  /* ═══════════════════════════════════════════
+     CONTACT SHEET — hoja de contactos
+     ═══════════════════════════════════════════ */
+  .contact-sheet {
+    margin-bottom: 4rem;
+    opacity: 0; transform: translateY(40px);
+    transition: all 0.8s var(--transition);
+  }
+  .contact-sheet.visible { opacity: 1; transform: translateY(0); }
+
+  .cs-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .cs-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .cs-meta {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+  }
+
+  /* The film strip container */
+  .cs-strip {
+    position: relative;
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 2px;
+    padding: 1.2rem 0.6rem;
+    overflow: hidden;
+  }
+
+  /* Sprocket holes top and bottom */
+  .cs-strip::before,
+  .cs-strip::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 10px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      transparent 30px,
+      rgba(255,255,255,0.04) 30px,
+      rgba(255,255,255,0.04) 38px,
+      transparent 38px,
+      transparent 50px
+    );
+    z-index: 2;
+  }
+  .cs-strip::before { top: 0; }
+  .cs-strip::after { bottom: 0; }
+
+  /* Thin film edge lines */
+  .cs-film-edge {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+  .cs-film-edge.top { top: 11px; }
+  .cs-film-edge.bottom { bottom: 11px; }
+
+  /* The grid of frames */
+  .cs-frames {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 3px;
+    padding: 0.5rem 0.3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Each frame */
+  .cs-frame {
+    position: relative;
+    aspect-ratio: 3/2;
+    cursor: pointer;
+    background: #111;
+    padding: 0;
+    transition: transform 0.3s var(--transition);
+    /* Irregular negative rebate edge */
+    border: 3px solid #0d0d0d;
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.03),
+      0 0 0 1px rgba(0,0,0,0.8);
+    /* Slightly irregular edges via clip-path with subtle variation */
+    border-radius: 0;
+  }
+
+  /* Simulate irregular rebate with a rough inner shadow */
+  .cs-frame::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 2px solid transparent;
+    border-image: repeating-linear-gradient(
+      180deg,
+      rgba(20,20,18,1) 0px,
+      rgba(30,28,25,1) 1px,
+      rgba(15,14,12,1) 2px,
+      rgba(25,23,20,1) 3px
+    ) 2;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .cs-frame:hover {
+    transform: scale(1.03);
+    z-index: 5;
+  }
+
+  .cs-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) contrast(1.05);
+    transition: filter 0.4s ease;
+  }
+
+  .cs-frame:hover img {
+    filter: saturate(1) contrast(1);
+  }
+
+  /* Frame number */
+  .cs-frame-num {
+    position: absolute;
+    bottom: 6px;
+    right: 7px;
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    color: #c4713b;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 2px rgba(0,0,0,0.3);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* Triangle arrow (rebobinado) */
+  .cs-frame-arrow {
+    position: absolute;
+    top: 6px;
+    left: 7px;
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 5px solid #c4713b;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* Kodak/Fuji style edge text */
+  .cs-edge-text {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: #c4713b;
+    opacity: 0.3;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.5rem 0;
+    text-align: right;
+  }
+
+  /* Hidden frames (collapsed) */
+  .cs-frame-hidden {
+    display: none;
+  }
+
+  .cs-frame-reveal {
+    animation: frameDevelop 1.8s var(--transition) forwards;
+  }
+
+  /* Pre-set the image to negative BEFORE animation starts */
+  .cs-frame-reveal img {
+    filter: invert(1) contrast(1.5) brightness(1.8) saturate(0);
+    animation: filmDevelop 2.2s ease-out forwards;
+  }
+
+  /* Container fades in */
+  @keyframes frameDevelop {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+
+  /* Image: develops from negative to positive */
+  @keyframes filmDevelop {
+    0% {
+      filter: invert(1) contrast(1.5) brightness(1.8) saturate(0);
+    }
+    30% {
+      filter: invert(0.6) contrast(1.2) brightness(1.4) saturate(0);
+    }
+    60% {
+      filter: invert(0.25) contrast(1.1) brightness(1.1) saturate(0.5);
+    }
+    85% {
+      filter: invert(0.05) contrast(1.05) brightness(1.02) saturate(0.8);
+    }
+    100% {
+      filter: invert(0) contrast(1.05) brightness(1) saturate(0.85);
+    }
+  }
+
+  /* Expand button */
+  .cs-expand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--mono);
+  }
+
+  .cs-expand-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .cs-expand-arrow {
+    font-size: 0.8rem;
+    color: var(--accent);
+    transition: transform 0.3s ease;
+  }
+
+  .cs-expand:hover {
+    border-color: rgba(201,169,110,0.2);
+    background: rgba(201,169,110,0.03);
+  }
+
+  .cs-expand:hover .cs-expand-text { color: var(--text); }
+  .cs-expand:hover .cs-expand-arrow { transform: translateY(3px); }
+
+  .cs-expand-done {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+
+  /* ─── EXPO ITEMS (keep as gallery-item cards) ─── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+  .gallery-item {
+    position: relative; aspect-ratio: 4/3; overflow: hidden; cursor: pointer;
+    opacity: 0; transform: translateY(50px); transition: all 0.8s var(--transition);
+  }
+  .gallery-item.visible { opacity: 1; transform: translateY(0); }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 1.2s var(--transition), filter 0.6s ease;
+    filter: grayscale(20%) brightness(0.85);
+  }
+  .gallery-item:hover img { transform: scale(1.08); filter: grayscale(0%) brightness(1); }
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(transparent 40%, rgba(10,10,10,0.9));
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+    opacity: 0; transition: opacity 0.5s ease;
+  }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .gallery-item .overlay h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: 0.3rem; }
+  .gallery-item .overlay p { font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); font-weight: 300; }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(5,5,5,0.97); display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
+    backdrop-filter: blur(30px);
+  }
+  .lightbox.active { opacity: 1; visibility: visible; }
+  .lightbox-header {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 3rem; z-index: 10;
+  }
+  .lightbox-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--text); }
+  .lightbox-counter { font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--text-muted); font-weight: 200; margin-top: 0.2rem; }
+  .lightbox-close {
+    background: none; border: none; color: var(--text-muted); cursor: pointer;
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    transition: color 0.3s ease, transform 0.3s ease; font-size: 0;
+  }
+  .lightbox-close:hover { color: var(--text); transform: rotate(90deg); }
+  .lightbox-close svg { width: 24px; height: 24px; }
+  .lightbox-image-wrap { position: relative; max-width: 85vw; max-height: 78vh; display: flex; align-items: center; justify-content: center; }
+  .lightbox-image-wrap img {
+    max-width: 85vw; max-height: 78vh; object-fit: contain;
+    opacity: 0; transform: scale(0.95);
+    transition: opacity 0.4s ease, transform 0.5s var(--transition); display: block;
+  }
+  .lightbox-image-wrap img.loaded { opacity: 1; transform: scale(1); }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text); width: 50px; height: 50px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    transition: all 0.3s ease; backdrop-filter: blur(10px); border-radius: 50%;
+  }
+  .lightbox-nav:hover { background: rgba(201,169,110,0.15); border-color: var(--accent); color: var(--accent); }
+  .lightbox-nav svg { width: 20px; height: 20px; }
+  .lightbox-prev { left: 2rem; }
+  .lightbox-next { right: 2rem; }
+  .lightbox-thumbs {
+    position: absolute; bottom: 3.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 0.5rem; max-width: 80vw; overflow-x: auto; padding: 0.5rem;
+    scrollbar-width: none;
+  }
+  .lightbox-thumbs::-webkit-scrollbar { display: none; }
+  .lightbox-thumb {
+    width: 48px; height: 48px; border-radius: 4px; overflow: hidden; cursor: pointer;
+    flex-shrink: 0; opacity: 0.35; transition: opacity 0.3s ease, outline 0.3s ease;
+    outline: 2px solid transparent; outline-offset: 2px;
+  }
+  .lightbox-thumb.active { opacity: 1; outline-color: var(--accent); }
+  .lightbox-thumb:hover { opacity: 0.8; }
+  .lightbox-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .lightbox-footer { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; padding: 1rem; }
+  .lightbox-caption { font-family: var(--sans); font-size: 0.8rem; color: var(--text-muted); font-weight: 200; letter-spacing: 0.05em; }
+
+  /* ─── EXPO MODAL ─── */
+  .expo-modal {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(5,5,5,0.97); backdrop-filter: blur(30px);
+    opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
+    overflow-y: auto;
+  }
+  .expo-modal.active { opacity: 1; visibility: visible; }
+  .expo-modal-inner { max-width: 900px; margin: 0 auto; padding: 5rem 3rem 4rem; position: relative; min-height: 100vh; }
+  .expo-modal-close { position: fixed; top: 1.5rem; right: 2rem; z-index: 10; }
+  .expo-modal-content {
+    opacity: 0; transform: translateY(30px);
+    transition: all 0.6s var(--transition) 0.2s;
+  }
+  .expo-modal.active .expo-modal-content { opacity: 1; transform: translateY(0); }
+  .expo-video-wrap {
+    width: 100%; aspect-ratio: 16/9; margin-bottom: 2.5rem;
+    border-radius: 4px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .expo-video-wrap iframe { width: 100%; height: 100%; border: none; }
+  .expo-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--text); margin-bottom: 0.5rem; }
+  .expo-subtitle { font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); font-weight: 300; margin-bottom: 3rem; }
+  .expo-text-author { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; font-weight: 300; }
+  .expo-text-author a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: border-color 0.3s ease; }
+  .expo-text-author a:hover { border-color: var(--accent); }
+  .expo-text-title { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--text); margin-bottom: 2.5rem; font-style: italic; }
+  .expo-text-body p {
+    font-family: var(--serif); font-size: 1.15rem; line-height: 2;
+    color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 300;
+    text-align: justify; hyphens: auto;
+  }
+  .expo-text-body p:first-of-type::first-letter {
+    font-size: 3.5rem; float: left; line-height: 1; margin-right: 0.5rem; margin-top: 0.1rem;
+    color: var(--accent); font-family: var(--serif); font-weight: 400;
+  }
+  .expo-prensa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .expo-prensa img {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+    filter: brightness(0.9);
+    transition: filter 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .expo-prensa img:hover {
+    filter: brightness(1);
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 600px) {
+    .expo-prensa { grid-template-columns: 1fr; }
+  }
+
+  .expo-photos-label {
+    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); margin-top: 3rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .expo-photos-label::after { content: ''; flex: 1; height: 1px; background: var(--accent-dim); }
+
+  /* Expo photos use contact sheet style too */
+  .expo-cs-strip {
+    position: relative;
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 2px;
+    padding: 1.2rem 0.6rem;
+  }
+  .expo-cs-strip .cs-frames {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+  .about-image {
+    aspect-ratio: 1/1; overflow: hidden; position: relative;
+    max-width: 500px;
+    opacity: 0; transform: translateX(-40px); transition: all 1s var(--transition);
+  }
+  .about-image.visible { opacity: 1; transform: translateX(0); }
+  .about-image img { width: 100%; height: auto; display: block; filter: grayscale(40%); transition: filter 0.6s ease; }
+  .about-image:hover img { filter: grayscale(0%); }
+  .about-image::after {
+    content: ''; position: absolute; top: -1rem; right: -1rem; bottom: 1rem; left: 1rem;
+    border: 1px solid var(--accent-dim); z-index: -1;
+  }
+  .about-text { opacity: 0; transform: translateX(40px); transition: all 1s var(--transition) 0.2s; }
+  .about-text.visible { opacity: 1; transform: translateX(0); }
+  .about-text p { font-family: var(--sans); font-size: 1rem; line-height: 1.9; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 200; }
+  .about-text p:first-of-type { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--text); font-style: italic; line-height: 1.6; }
+
+  /* ─── CONTACT ─── */
+  .contact-section { text-align: center; padding: 10rem 3rem; }
+  .contact-email {
+    font-family: var(--serif); font-size: clamp(1.5rem, 3.5vw, 3rem); font-weight: 300;
+    color: var(--text); text-decoration: none; position: relative; display: inline-block;
+    transition: color 0.3s ease;
+  }
+  .contact-email::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 1px;
+    background: var(--accent); transform: scaleX(0); transform-origin: right;
+    transition: transform 0.6s var(--transition);
+  }
+  .contact-email:hover { color: var(--accent); }
+  .contact-email:hover::after { transform: scaleX(1); transform-origin: left; }
+  .contact-social { margin-top: 3rem; display: flex; justify-content: center; gap: 2rem; }
+  .contact-social a { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s ease; }
+  .contact-social a:hover { color: var(--accent); }
+
+  footer { text-align: center; padding: 3rem; border-top: 1px solid rgba(255,255,255,0.05); }
+  footer p { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--text-muted); font-weight: 200; }
+
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat; background-size: 200px;
+  }
+
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+  .nav-toggle span { display: block; width: 24px; height: 1px; background: var(--text); margin: 6px 0; transition: all 0.3s ease; }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    section { padding: 5rem 1.5rem; }
+    .nav { padding: 1.2rem 1.5rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .cs-frames { grid-template-columns: repeat(3, 1fr); }
+    .lightbox-nav { width: 40px; height: 40px; }
+    .lightbox-prev { left: 0.8rem; }
+    .lightbox-next { right: 0.8rem; }
+    .lightbox-header { padding: 1rem 1.5rem; }
+    .lightbox-image-wrap img { max-width: 95vw; }
+    .expo-modal-inner { padding: 4rem 1.5rem 3rem; }
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: fixed; top: 0; right: -100%; width: 70%; height: 100vh;
+      background: rgba(10,10,10,0.97); backdrop-filter: blur(30px);
+      flex-direction: column; justify-content: center; align-items: center; gap: 2rem;
+      transition: right 0.5s var(--transition);
+    }
+    .nav-links.open { right: 0; }
+    .nav-links a { font-size: 1rem; }
+  }
+  @media (max-width: 600px) {
+    .hero-logo { font-size: 2.5rem; }
+    .cs-frames { grid-template-columns: repeat(2, 1fr); }
+    .lightbox-thumbs { bottom: 2.5rem; }
+    .lightbox-thumb { width: 36px; height: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="nav" id="nav">
+  <a href="#" class="nav-brand">Josep Costa</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#expos">Exposiciones</a></li>
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero">
+  <video class="hero-video" id="heroVideo" autoplay muted playsinline></video>
+  <a href="#portfolio" class="hero-scroll">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </a>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio">
+  <div class="section-header">
+    <p class="section-label">Portfolio</p>
+  </div>
+  <div id="portfolio-sheets"></div>
+</section>
+
+<!-- Expos -->
+<section id="expos">
+  <div class="section-header">
+    <p class="section-label">Exposiciones</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item" data-animate data-expo="mirades">
+      <img src="img/mirades/01.jpg" alt="3 mirades sobre una illa">
+      <div class="overlay"><h3>3 Mirades Sobre una Illa</h3><p>Club Diario de Ibiza · Junio 2013</p></div>
+    </div>
+    <div class="gallery-item" data-animate data-expo="carrusel">
+      <img src="img/mirades/03.jpg" alt="El Carrusel">
+      <div class="overlay"><h3>El Carrusel</h3><p>Taller de Fotografía · Mayo 2016</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-header">
+    <p class="section-label">Sobre mí</p>
+    <h2 class="section-title">Josep Costa</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-image" data-animate>
+      <img src="img/about.jpg" alt="Josep Costa">
+    </div>
+    <div class="about-text" data-animate>
+      <p>La fotografía analógica como forma de mirar despacio en un mundo que va demasiado rápido.</p>
+      <p>Nacido en Ibiza en 1988, desde pequeño sintió una atracción natural por las Bellas Artes, en especial por la música y la fotografía. Su forma de entender la imagen lo llevó, de manera casi inevitable, a la fotografía analógica — un proceso en el que cada decisión cuenta y cada negativo es irrepetible.</p>
+      <p>Esta página recoge una selección de imágenes que ha ido acumulando a lo largo de los años: paisajes, tradiciones y momentos de tránsito que intentan capturar la belleza de la tierra en la que vive.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="section-header" style="text-align:center;">
+    <p class="section-label" style="justify-content:center;">Contacto</p>
+  </div>
+  <a href="mailto:info@josepcosta.es" class="contact-email">info@josepcosta.es</a>
+  <div class="contact-social">
+    <a href="https://www.instagram.com/jcostamarin/" target="_blank" rel="noopener">Instagram</a>
+    <a href="http://jcostamarin.tumblr.com/" target="_blank" rel="noopener">Blog</a>
+    <a href="https://www.inprnt.com/frames/strato/" target="_blank" rel="noopener">Prints</a>
+  </div>
+</section>
+
+<footer><p>&copy; 2026 Josep Costa · Todos los derechos reservados</p></footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-header">
+    <div>
+      <div class="lightbox-title" id="lbTitle"></div>
+      <div class="lightbox-counter" id="lbCounter"></div>
+    </div>
+    <button class="lightbox-close" id="lbClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="lightbox-image-wrap"><img id="lbImg" src="" alt=""></div>
+  <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <div class="lightbox-thumbs" id="lbThumbs"></div>
+  <div class="lightbox-footer"><div class="lightbox-caption" id="lbCaption"></div></div>
+</div>
+
+<!-- EXPO MODAL -->
+<div class="expo-modal" id="expoModal">
+  <div class="expo-modal-inner" id="expoModalInner">
+    <button class="lightbox-close expo-modal-close" id="expoClose" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="expo-modal-content" id="expoContent"></div>
+  </div>
+</div>
+
+<script>
+  // ─── Hero video: random start, then alternate ───
+  const heroVideos = ['img/hero1.mp4', 'img/hero2.mp4'];
+  let heroIdx = Math.floor(Math.random() * heroVideos.length);
+  const heroVideo = document.getElementById('heroVideo');
+
+  function playHeroVideo() {
+    heroVideo.src = heroVideos[heroIdx];
+    heroVideo.load();
+    heroVideo.play().catch(() => {});
+  }
+
+  heroVideo.addEventListener('ended', () => {
+    heroIdx = (heroIdx + 1) % heroVideos.length;
+    playHeroVideo();
+  });
+
+  playHeroVideo();
+
+  // ══════════════════════════════════════════════════════════
+  // DATOS DE SERIES
+  // Para añadir fotos: mete el .jpg en la carpeta y añade
+  //   { src: 'img/carpeta/XX.jpg' } al array photos
+  // Para quitar: borra la línea y el archivo
+  // ══════════════════════════════════════════════════════════
+
+  function genPhotos(folder, count) {
+    return Array.from({length: count}, (_, i) =>
+      ({ src: `img/${folder}/${String(i+1).padStart(2,'0')}.jpg` })
+    );
+  }
+
+  const allSeries = [
+    { key: 'gigantes',       title: 'Los gigantes',                          filmStock: 'KODAK TRI-X 400  5063',              photos: genPhotos('gigantes', 6) },
+    { key: 'paisajesenfuga', title: 'Paisajes en fuga',                      filmStock: 'ILFORD HP5 PLUS 400',                photos: genPhotos('paisajesenfuga', 11) },
+    { key: 'matances',       title: 'Tradicions: Matances',                  filmStock: 'ILFORD HP5+ · LEICA M6 & MP',        photos: genPhotos('matances', 34) },
+    { key: 'nyc',            title: 'New York City',                         filmStock: 'KODAK PORTRA 800 · ROLLEI 3.5F',     photos: genPhotos('nyc', 13) },
+    { key: 'light',          title: "There's a Light That Never Goes Out",   filmStock: 'KODAK TRI-X 400 · PENTAX 67',        photos: genPhotos('light', 20) },
+    { key: 'trigo',          title: 'Perdidos en un mar de trigo',           filmStock: 'KODAK EKTAR 100 · HASSELBLAD 500CM', photos: genPhotos('trigo', 14) },
+  ];
+
+  // Build galleries lookup for lightbox
+  const galleries = {};
+  allSeries.forEach(s => {
+    galleries[s.key] = { title: s.title, photos: s.photos };
+  });
+
+  // ─── Render contact sheets ───
+  const PREVIEW_COUNT = 6;
+
+  function renderContactSheet(series) {
+    const startFrame = Math.floor(Math.random() * 10) + 1;
+    const hasMore = series.photos.length > PREVIEW_COUNT;
+    const extraCount = series.photos.length - PREVIEW_COUNT;
+
+    let html = `
+      <div class="contact-sheet" data-animate data-series-key="${series.key}">
+        <div class="cs-header">
+          <h3 class="cs-title">${series.title}</h3>
+          <span class="cs-meta">${series.filmStock}</span>
+        </div>
+        <div class="cs-strip">
+          <div class="cs-film-edge top"></div>
+          <div class="cs-film-edge bottom"></div>
+          <div class="cs-frames">`;
+
+    series.photos.forEach((photo, i) => {
+      const frameNum = startFrame + i;
+      const numStr = String(frameNum).padStart(2, '0');
+      const arrow = i % 3 === 0 ? '<div class="cs-frame-arrow"></div>' : '';
+      const hiddenClass = i >= PREVIEW_COUNT ? ' cs-frame-hidden' : '';
+      html += `
+            <div class="cs-frame${hiddenClass}" data-gallery-key="${series.key}" data-photo-index="${i}">
+              ${arrow}
+              <img src="${photo.src}" alt="" loading="lazy">
+              <span class="cs-frame-num">${numStr}</span>
+            </div>`;
+    });
+
+    html += `
+          </div>
+          <div class="cs-edge-text">${series.filmStock}  ↕</div>
+        </div>`;
+
+    if (hasMore) {
+      html += `
+        <button class="cs-expand" data-expand-key="${series.key}">
+          <span class="cs-expand-text">+ ${extraCount} fotogramas</span>
+          <span class="cs-expand-arrow">↓</span>
+        </button>`;
+    }
+
+    html += `</div>`;
+    return html;
+  }
+
+  // Render into container
+  document.getElementById('portfolio-sheets').innerHTML =
+    allSeries.map(renderContactSheet).join('');
+
+  // Bind expand buttons
+  document.querySelectorAll('.cs-expand').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const key = btn.dataset.expandKey;
+      const sheet = document.querySelector(`.contact-sheet[data-series-key="${key}"]`);
+      const hiddenFrames = sheet.querySelectorAll('.cs-frame-hidden');
+      hiddenFrames.forEach((frame, i) => {
+        frame.style.animationDelay = `${i * 0.12}s`;
+        frame.querySelector('img').style.animationDelay = `${i * 0.12}s`;
+        frame.classList.remove('cs-frame-hidden');
+        frame.classList.add('cs-frame-reveal');
+      });
+      btn.classList.add('cs-expand-done');
+      setTimeout(() => btn.remove(), 500);
+    });
+  });
+
+  // Bind frame clicks → lightbox
+  document.querySelectorAll('.cs-frame').forEach(frame => {
+    frame.addEventListener('click', () => {
+      const key = frame.dataset.galleryKey;
+      const idx = parseInt(frame.dataset.photoIndex);
+      openLightbox(key);
+      showPhoto(idx);
+    });
+  });
+
+  // ─── Lightbox ───
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbCounter = document.getElementById('lbCounter');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbThumbs = document.getElementById('lbThumbs');
+  let currentGallery = null;
+  let currentIndex = 0;
+
+  function openLightbox(key) {
+    currentGallery = galleries[key];
+    currentIndex = 0;
+    if (!currentGallery) return;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    lbTitle.textContent = currentGallery.title;
+    buildThumbs();
+    showPhoto(0);
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('active');
+    lbImg.classList.remove('loaded');
+    currentGallery = null;
+    if (!expoActive) document.body.style.overflow = '';
+  }
+
+  function showPhoto(index) {
+    if (!currentGallery) return;
+    const photos = currentGallery.photos;
+    currentIndex = (index + photos.length) % photos.length;
+    const photo = photos[currentIndex];
+    lbImg.classList.remove('loaded');
+    lbCounter.textContent = `${currentIndex + 1} / ${photos.length}`;
+    lbCaption.textContent = photo.caption || '';
+    lbThumbs.querySelectorAll('.lightbox-thumb').forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+    const active = lbThumbs.querySelector('.lightbox-thumb.active');
+    if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    const img = new Image();
+    img.onload = () => {
+      lbImg.src = photo.src;
+      lbImg.alt = photo.caption || currentGallery.title;
+      requestAnimationFrame(() => requestAnimationFrame(() => lbImg.classList.add('loaded')));
+    };
+    img.src = photo.src;
+  }
+
+  function buildThumbs() {
+    lbThumbs.innerHTML = '';
+    currentGallery.photos.forEach((photo, i) => {
+      const t = document.createElement('div');
+      t.className = 'lightbox-thumb' + (i === 0 ? ' active' : '');
+      t.innerHTML = `<img src="${photo.src}" alt="">`;
+      t.addEventListener('click', () => showPhoto(i));
+      lbThumbs.appendChild(t);
+    });
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lbPrev').addEventListener('click', () => showPhoto(currentIndex - 1));
+  document.getElementById('lbNext').addEventListener('click', () => showPhoto(currentIndex + 1));
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+
+  // Touch swipe
+  let touchX = 0;
+  lb.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].screenX; }, { passive: true });
+  lb.addEventListener('touchend', (e) => {
+    if (!currentGallery) return;
+    const d = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(d) > 50) d > 0 ? showPhoto(currentIndex - 1) : showPhoto(currentIndex + 1);
+  }, { passive: true });
+
+  // ─── Expo Modal ───
+  const expoModal = document.getElementById('expoModal');
+  const expoContent = document.getElementById('expoContent');
+  let expoActive = false;
+
+  const expoData = {
+    carrusel: {
+      html: `
+        <h2 class="expo-title">El Carrusel</h2>
+        <p class="expo-subtitle">Galería El Carrusel, Valladolid · Mayo 2016</p>
+        <div class="expo-video-wrap">
+          <iframe src="https://player.vimeo.com/video/212995773?autoplay=1&title=0&byline=0&portrait=0"
+                  allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="expo-photos-label">Prensa</p>
+        <div class="expo-prensa">
+          <img src="img/prensa/carrusel-diario-ibiza-1.jpg" alt="Diario de Ibiza — Mayo 2016" loading="lazy">
+          <img src="img/prensa/carrusel-diario-valladolid.jpg" alt="El Diario de Valladolid — Mayo 2016" loading="lazy">
+        </div>
+      `,
+      photos: genPhotos('paisajesenfuga', 11)
+    },
+    mirades: {
+      html: `
+        <h2 class="expo-title">3 Mirades Sobre una Illa</h2>
+        <p class="expo-subtitle">Club Diario de Ibiza · Junio 2013</p>
+        <h3 class="expo-text-title">Un Compromiso Transversal</h3>
+        <p class="expo-text-author">por <a href="http://twitter.com/julioherranz" target="_blank" rel="noopener">Julio Herranz</a></p>
+        <div class="expo-text-body">
+          <p>Las islas mediterráneas en estos tiempos convulsos son frágiles casi por definición, pues están demasiado expuestas a la codicia del mayor depredador que ha conocido la tierra, la criatura humana. Y entre ellas, por un privilegio perverso, Eivissa es de las que tiene en su mano más papeletas para llevarse la palma del martirio urbanístico a costa del desprecio indiferente a su sufrido territorio.</p>
+          <p>Por eso son bien necesarias y bienvenidas las manifestaciones artísticas que defiendan su celebrada belleza natural, tal batallas de sueños emotivos contra el agravio que sus malos hijos (por acción, complicidad u omisión) le infringen en su delicada y tierna geografía. Hay daños irreparables, sobre todo en sus dolientes costas, manal de rica miel salina para negocios de usura, asco y miedo. Cuántos crímenes al mejor postor se negocian a la sombra de la traición a su patrimonio; y con la impunidad que permiten unas leyes y normas violadas sin el menor recato y al amparo del argumento miserable de ganancias privadas para públicas perdidas.</p>
+          <p>Testigos intergeneracionales, Josep Costa, Ferran Nogués y Rafa Domínguez unen aquí sus armas fotográficas para mostrar un compromiso transversal con su isla, con nuestra isla. Y lo hacen con gusto, técnica, belleza y arte. Tres miradas complementarias para defender una causa común que les une en intención y gracia. Josep, el benjamín, oteando con sobriedad, elegancia y evanescencia horizontes y cielos fugaces desde privilegiados rincones costaneros. Ferran, perdiéndose encantado en la Eivissa interior, vegetal, mineral y armónica de tradiciones en fuga, a la que extrae imágenes que parecen olvidos amorosos. Y Rafa, reconocido profesional, inquieto en técnicas que somete a su arte, pintando y recreando con su paleta delicada y colorista unos paisajes y rincones que defienden lo onírico para buscar el alma eterna de su isla.</p>
+          <p>¿Por qué Eivissa produce tantos fotógrafos y de notables méritos? Se diría que lo da la tierra; por su luz seductora, por sus armoniosas formas, por su vasta variedad de escenarios que piden y exigen una mirada que desvele y oculte al mismo tiempo. Dejando siempre un inefable velo de misterio como deuda querida que nunca acabaremos de pagar, porque no tiene precio y en su busca se nos va la vida.</p>
+        </div>
+      `,
+      photos: genPhotos('mirades', 6)
+    }
+  };
+
+  let currentExpoKey = null;
+
+  function openExpo(key) {
+    const data = expoData[key];
+    if (!data) return;
+    currentExpoKey = key;
+
+    let html = data.html;
+    if (data.photos && data.photos.length) {
+      html += `<p class="expo-photos-label">Fotografías</p>`;
+      html += `<div class="expo-cs-strip"><div class="cs-frames">`;
+      data.photos.forEach((photo, i) => {
+        const numStr = String(i + 1).padStart(2, '0');
+        html += `<div class="cs-frame" data-expo-photo="${i}">
+          <img src="${photo.src}" alt="" loading="lazy">
+          <span class="cs-frame-num">${numStr}</span>
+        </div>`;
+      });
+      html += `</div></div>`;
+    }
+
+    expoContent.innerHTML = html;
+
+    // Bind expo photo thumbs
+    expoContent.querySelectorAll('[data-expo-photo]').forEach(thumb => {
+      thumb.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(thumb.dataset.expoPhoto);
+        // Register in galleries temporarily
+        galleries['_expo_' + key] = {
+          title: key === 'mirades' ? '3 Mirades Sobre una Illa' : 'Paisajes en fuga',
+          photos: data.photos.slice()
+        };
+        openLightbox('_expo_' + key);
+        showPhoto(idx);
+      });
+    });
+
+    expoModal.classList.add('active');
+    expoModal.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    expoActive = true;
+  }
+
+  function closeExpo() {
+    expoModal.classList.remove('active');
+    document.body.style.overflow = '';
+    expoActive = false;
+    setTimeout(() => { expoContent.innerHTML = ''; }, 400);
+  }
+
+  document.getElementById('expoClose').addEventListener('click', closeExpo);
+  expoModal.addEventListener('click', (e) => { if (e.target === expoModal) closeExpo(); });
+  document.querySelectorAll('[data-expo]').forEach(el => {
+    el.addEventListener('click', () => openExpo(el.dataset.expo));
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (currentGallery) closeLightbox();
+      else if (expoActive) closeExpo();
+    }
+    if (!currentGallery) return;
+    if (e.key === 'ArrowLeft') showPhoto(currentIndex - 1);
+    if (e.key === 'ArrowRight') showPhoto(currentIndex + 1);
+  });
+
+  // ─── Scroll animations ───
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.section-header, [data-animate], .contact-sheet').forEach(el => observer.observe(el));
+
+  // Navbar
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80));
+
+  // Mobile menu
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+  document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+</script>
+</body>
+</html>
