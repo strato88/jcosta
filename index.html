@@ -504,6 +504,47 @@
   .expo-video-wrap iframe { width: 100%; height: 100%; border: none; }
   .expo-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--text); margin-bottom: 0.5rem; }
   .expo-subtitle { font-family: var(--sans); font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); font-weight: 300; margin-bottom: 3rem; }
+
+  .expo-press-label {
+    font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); margin-top: 3rem; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .expo-press-label::after { content: ''; flex: 1; height: 1px; background: var(--accent-dim); }
+
+  .expo-press-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .expo-press-item {
+    overflow: hidden;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: transform 0.3s var(--transition);
+  }
+
+  .expo-press-item:hover { transform: scale(1.02); }
+
+  .expo-press-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0.9);
+    transition: filter 0.3s ease;
+  }
+
+  .expo-press-item:hover img { filter: brightness(1); }
+
+  .expo-press-caption {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+  }
   .expo-text-author { font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem; font-weight: 300; }
   .expo-text-author a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); transition: border-color 0.3s ease; }
   .expo-text-author a:hover { border-color: var(--accent); }
@@ -787,8 +828,9 @@
   const allSeries = [
     { key: 'gigantes',       title: 'Los gigantes',                          filmStock: 'KODAK TRI-X 400  5063',              photos: genPhotos('gigantes', 6) },
     { key: 'paisajesenfuga', title: 'Paisajes en fuga',                      filmStock: 'ILFORD HP5 PLUS 400',                photos: genPhotos('paisajesenfuga', 11) },
-    { key: 'matances',       title: 'Tradicions: Matances',                  filmStock: 'ILFORD HP5+ · LEICA M6 & MP',        photos: genPhotos('matances', 34) },
+    { key: 'matances',       title: 'Tradicions: Matances',                  filmStock: 'ILFORD HP5+ · LEICA M6 & MP',        photos: genPhotos('matances', 36) },
     { key: 'nyc',            title: 'New York City',                         filmStock: 'KODAK PORTRA 800 · ROLLEI 3.5F',     photos: genPhotos('nyc', 13) },
+    { key: 'southwest',      title: 'Southwest',                             filmStock: 'KODAK PORTRA 160/800 · PENTAX 67',   photos: genPhotos('southwest', 20) },
     { key: 'light',          title: "There's a Light That Never Goes Out",   filmStock: 'KODAK TRI-X 400 · PENTAX 67',        photos: genPhotos('light', 20) },
     { key: 'trigo',          title: 'Perdidos en un mar de trigo',           filmStock: 'KODAK EKTAR 100 · HASSELBLAD 500CM', photos: genPhotos('trigo', 14) },
   ];
@@ -967,10 +1009,19 @@
           <iframe src="https://player.vimeo.com/video/212995773?autoplay=1&title=0&byline=0&portrait=0"
                   allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <p class="expo-photos-label">Prensa</p>
-        <div class="expo-prensa">
-          <img src="img/prensa/carrusel-diario-ibiza-1.jpg" alt="Diario de Ibiza — Mayo 2016" loading="lazy">
-          <img src="img/prensa/carrusel-diario-valladolid.jpg" alt="El Diario de Valladolid — Mayo 2016" loading="lazy">
+        <div class="expo-text-body" style="margin-top:2rem;">
+          <p>Exposición de la serie «Paisajes en fuga» en la galería El Carrusel de Valladolid. Doce imágenes de Eivissa captadas en formato analógico — ventanas en las que se pueden ver los elementos característicos del paisaje de la isla: tierra, mar y aire.</p>
+        </div>
+        <p class="expo-press-label">Prensa</p>
+        <div class="expo-press-grid">
+          <div class="expo-press-item">
+            <img src="img/prensa-valladolid.jpg" alt="El Diario de Valladolid, 12 mayo 2016" loading="lazy">
+            <p class="expo-press-caption">El Diario de Valladolid · 12 mayo 2016</p>
+          </div>
+          <div class="expo-press-item">
+            <img src="img/prensa-ibiza.jpg" alt="Diario de Ibiza, 6 mayo 2016" loading="lazy">
+            <p class="expo-press-caption">Diario de Ibiza · 6 mayo 2016</p>
+          </div>
         </div>
       `,
       photos: genPhotos('paisajesenfuga', 11)
